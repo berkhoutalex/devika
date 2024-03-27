@@ -4,6 +4,8 @@ import {
   messages,
   modelList,
   projectList,
+  selectedModel,
+  selectedProject
 } from "./store";
 
 const getApiBaseUrl = () => {
@@ -28,6 +30,9 @@ export async function fetchProjectList() {
   const response = await fetch(`${API_BASE_URL}/api/project-list`);
   const data = await response.json();
   projectList.set(data.projects);
+  if (projectList.indexOf(selectedProject) === -1) {
+    selectedProject.set("");
+  }
 }
 
 export async function createProject(projectName) {
@@ -44,6 +49,11 @@ export async function fetchModelList() {
   const response = await fetch(`${API_BASE_URL}/api/model-list`);
   const data = await response.json();
   modelList.set(data.models);
+  if (modelList.indexOf(selectedModel) === -1) {
+    selectedModel.set("");
+  }
+
+
 }
 
 export async function fetchAgentState() {
