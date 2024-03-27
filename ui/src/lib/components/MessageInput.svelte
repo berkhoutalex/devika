@@ -59,7 +59,7 @@
     id="message-input"
     class="w-full p-2 bg-slate-800 rounded pr-20"
     placeholder="Type your message..."
-    bind:value={$currentMEssage}
+    bind:value={$currentMessage}
     on:input={calculateTokens}
     on:keydown={(e) => {
       if (e.key === "Enter" && !e.shiftKey) {
