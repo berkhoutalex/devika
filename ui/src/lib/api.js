@@ -50,7 +50,7 @@ export async function fetchModelList() {
   const data = await response.json();
   modelList.set(data.models);
   selectedModel.update(
-    (value) => (data.models.map((model) => model[0].concat(' ', model[1])).indexOf(value) === -1 ? "" : value)
+    (value) => (data.models.map((model) => `${model[0]} (${model[1]})`).indexOf(value) === -1 ? "" : value)
   );
 
 
