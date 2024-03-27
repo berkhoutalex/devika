@@ -1,6 +1,6 @@
 <script>
   import { sendMessage, executeAgent, API_BASE_URL } from "$lib/api";
-  import { agentState, messages } from "$lib/store";
+  import { agentState, messages, currentMessage } from "$lib/store";
 
   let isAgentActive = false;
 
@@ -9,7 +9,11 @@
     console.log("Agent is active", isAgentActive);
   }
 
-  let messageInput = "";
+
+  function updateMessage(message) {
+    $currentMessage = message;
+  }
+
   async function handleSendMessage() {
     const projectName = localStorage.getItem("selectedProject");
 
@@ -18,15 +22,15 @@
       return;
     }
 
-    if (messageInput.trim() !== "" && !isAgentActive) {
+    if ($currentMessage.trim() !== "" && !isAgentActive) {
       if ($messages.length === 0) {
-        console.log("Executing agent", messageInput);
-        await executeAgent(messageInput);
+        console.log("Executing agent", $currentMessage);
+        await executeAgent($currentMessage);
       } else {
-        console.log("Sending message", messageInput);
-        await sendMessage(messageInput);
+        console.log("Sending message", $currentMessage);
+        await sendMessage($currentMessage);
       }
-      messageInput = "";
+      updateMessage("");
     }
   }
 
@@ -55,7 +59,7 @@
     id="message-input"
     class="w-full p-2 bg-slate-800 rounded pr-20"
     placeholder="Type your message..."
-    bind:value={messageInput}
+    bind:value={$currentMEssage}
     on:input={calculateTokens}
     on:keydown={(e) => {
       if (e.key === "Enter" && !e.shiftKey) {

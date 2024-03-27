@@ -15,6 +15,8 @@ const getInitialSelectedModel = () => {
 };
 
 export const messages = writable([]);
+export const currentMessage = writable("")
+
 
 export const selectedProject = writable(getInitialSelectedProject());
 export const projectList = writable([]);
