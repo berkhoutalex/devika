@@ -1,8 +1,16 @@
 import { writable } from 'svelte/store';
 
+
+export const projectList = writable([]);
+
 const getInitialSelectedProject = () => {
   if (typeof window !== 'undefined' && window.localStorage) {
-    return localStorage.getItem('selectedProject') || '';
+    var project = localStorage.getItem('selectedProject') || '';
+    if (projectList.includes(project)) {
+      return project;
+    } else {
+      return '';
+    }
   }
   return '';
 };
@@ -19,7 +27,7 @@ export const currentMessage = writable("")
 
 
 export const selectedProject = writable(getInitialSelectedProject());
-export const projectList = writable([]);
+
 
 export const selectedModel = writable(getInitialSelectedModel());
 export const modelList = writable([]);
